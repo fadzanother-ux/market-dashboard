@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Dashboard Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0b1220;
+color:#fff;
+overflow-x:hidden;
+}
+
+.sidebar{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:250px;
+
+height:100vh;
+
+background:#111827;
+
+padding:20px;
+
+border-right:1px solid #222;
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#00e5ff;
+
+margin-bottom:40px;
+
+}
+
+.menu{
+
+list-style:none;
+
+}
+
+.menu li{
+
+padding:15px;
+
+margin-bottom:8px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.menu li:hover{
+
+background:#1e293b;
+
+}
+
+.menu i{
+
+margin-right:10px;
+
+}
+
+.main{
+
+margin-left:250px;
+
+padding:25px;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+.search{
+
+width:400px;
+
+background:#1e293b;
+
+padding:12px;
+
+border-radius:12px;
+
+display:flex;
+
+align-items:center;
+
+}
+
+.search input{
+
+background:none;
+
+border:none;
+
+outline:none;
+
+color:white;
+
+width:100%;
+
+margin-left:10px;
+
+font-size:15px;
+
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-bottom:30px;
+
+}
+
+.card{
+
+background:#111827;
+
+padding:20px;
+
+border-radius:16px;
+
+box-shadow:0 0 10px rgba(0,0,0,.2);
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.card h3{
+
+font-size:15px;
+
+color:#aaa;
+
+}
+
+.card h1{
+
+margin-top:10px;
+
+font-size:28px;
+
+}
+
+.green{
+
+color:#00ff84;
+
+}
+
+.red{
+
+color:#ff4d4d;
+
+}
+
+.section-title{
+
+margin:30px 0 15px;
+
+font-size:22px;
+
+font-weight:600;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:#111827;
+
+border-radius:15px;
+
+overflow:hidden;
+
+}
+
+th{
+
+background:#1f2937;
+
+padding:15px;
+
+text-align:left;
+
+}
+
+td{
+
+padding:15px;
+
+border-bottom:1px solid #1f2937;
+
+}
+
+.coin{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+.coin img{
+
+width:35px;
+
+height:35px;
+
+border-radius:50%;
+
+}
+
+tr:hover{
+
+background:#1a2235;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Market Pro
+
+</div>
+
+<ul class="menu">
+
+<li><i class="fa-solid fa-house"></i> Dashboard</li>
+
+<li><i class="fa-brands fa-bitcoin"></i> Crypto</li>
+
+<li><i class="fa-solid fa-building-columns"></i> Saham Indonesia</li>
+
+<li><i class="fa-solid fa-landmark"></i> Saham Amerika</li>
+
+<li><i class="fa-solid fa-star"></i> Watchlist</li>
+
+<li><i class="fa-solid fa-newspaper"></i> News</li>
+
+<li><i class="fa-solid fa-gear"></i> Settings</li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+
+<h1>Market Dashboard</h1>
+
+<div class="search">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input type="text" placeholder="Cari Crypto / Saham">
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Market Cap</h3>
+
+<h1 id="marketcap">$0</h1>
+
+<p class="green">+0.00%</p>
+
+</div>
+
+<div class="card">
+
+<h3>Bitcoin Dominance</h3>
+
+<h1 id="btcdom">0%</h1>
+
+<p class="green">Live</p>
+
+</div>
+
+<div class="card">
+
+<h3>Fear & Greed</h3>
+
+<h1 id="fear">0</h1>
+
+<p class="red">Neutral</p>
+
+</div>
+
+<div class="card">
+
+<h3>Total Volume</h3>
+
+<h1 id="volume">$0</h1>
+
+<p class="green">24H</p>
+
+</div>
+
+</div>
+
+<h2 class="section-title">🔥 Top Crypto</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Coin</th>
+
+<th>Harga</th>
+
+<th>24H</th>
+
+<th>Market Cap</th>
+
+</tr>
+
+</thead>
+
+<tbody id="cryptoTable"><tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png">
+Bitcoin (BTC)
+</td>
+
+<td id="btcPrice">$0</td>
+
+<td class="green" id="btcChange">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png">
+Ethereum (ETH)
+</td>
+
+<td id="ethPrice">$0</td>
+
+<td class="green" id="ethChange">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/4128/large/solana.png">
+Solana (SOL)
+</td>
+
+<td id="solPrice">$0</td>
+
+<td class="green">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/825/large/binance-coin-logo.png">
+BNB
+</td>
+
+<td id="bnbPrice">$0</td>
+
+<td class="green">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png">
+XRP
+</td>
+
+<td id="xrpPrice">$0</td>
+
+<td class="green">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png">
+Dogecoin
+</td>
+
+<td id="dogePrice">$0</td>
+
+<td class="red">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/325/large/Tether.png">
+USDT
+</td>
+
+<td>$1.00</td>
+
+<td class="green">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+<tr>
+
+<td class="coin">
+<img src="https://assets.coingecko.com/coins/images/9386/large/chainlink-new-logo.png">
+Chainlink
+</td>
+
+<td id="linkPrice">$0</td>
+
+<td class="green">0%</td>
+
+<td>$0</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<h2 class="section-title">
+🇮🇩 Saham Indonesia
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Logo</th>
+
+<th>Kode</th>
+
+<th>Perusahaan</th>
+
+<th>Harga</th>
+
+<th>Change</th>
+
+</tr>
+
+</thead>
+
+<tbody id="indoStock"><tr>
+<td><img src="https://logo.clearbit.com/bca.co.id" width="40"></td>
+<td>BBCA</td>
+<td>Bank Central Asia</td>
+<td id="bbca">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/bri.co.id" width="40"></td>
+<td>BBRI</td>
+<td>Bank Rakyat Indonesia</td>
+<td id="bbri">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/bankmandiri.co.id" width="40"></td>
+<td>BMRI</td>
+<td>Bank Mandiri</td>
+<td id="bmri">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/bni.co.id" width="40"></td>
+<td>BBNI</td>
+<td>Bank Negara Indonesia</td>
+<td id="bbni">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/telkom.co.id" width="40"></td>
+<td>TLKM</td>
+<td>Telkom Indonesia</td>
+<td id="tlkm">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/gojek.com" width="40"></td>
+<td>GOTO</td>
+<td>GoTo Group</td>
+<td id="goto">Rp0</td>
+<td class="red">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/astra.co.id" width="40"></td>
+<td>ASII</td>
+<td>Astra International</td>
+<td id="asii">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/antam.com" width="40"></td>
+<td>ANTM</td>
+<td>Aneka Tambang</td>
+<td id="antm">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/medcogroup.com" width="40"></td>
+<td>MEDC</td>
+<td>Medco Energi</td>
+<td id="medc">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/adaro.com" width="40"></td>
+<td>ADRO</td>
+<td>Adaro Energy</td>
+<td id="adro">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/ptba.co.id" width="40"></td>
+<td>PTBA</td>
+<td>Bukit Asam</td>
+<td id="ptba">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/kalbe.co.id" width="40"></td>
+<td>KLBF</td>
+<td>Kalbe Farma</td>
+<td id="klbf">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/indofood.com" width="40"></td>
+<td>INDF</td>
+<td>Indofood Sukses Makmur</td>
+<td id="indf">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/icbp.co.id" width="40"></td>
+<td>ICBP</td>
+<td>Indofood CBP</td>
+<td id="icbp">Rp0</td>
+<td class="green">0%</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<h2 class="section-title">
+🇺🇸 Saham Amerika
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Logo</th>
+<th>Ticker</th>
+<th>Perusahaan</th>
+<th>Harga</th>
+<th>Change</th>
+</tr>
+
+</thead>
+
+<tbody id="usStock"><tr>
+<td><img src="https://logo.clearbit.com/apple.com" width="40"></td>
+<td>AAPL</td>
+<td>Apple Inc</td>
+<td id="aapl">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/microsoft.com" width="40"></td>
+<td>MSFT</td>
+<td>Microsoft</td>
+<td id="msft">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/nvidia.com" width="40"></td>
+<td>NVDA</td>
+<td>NVIDIA</td>
+<td id="nvda">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/tesla.com" width="40"></td>
+<td>TSLA</td>
+<td>Tesla</td>
+<td id="tsla">$0</td>
+<td class="red">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/meta.com" width="40"></td>
+<td>META</td>
+<td>Meta Platforms</td>
+<td id="meta">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/amazon.com" width="40"></td>
+<td>AMZN</td>
+<td>Amazon</td>
+<td id="amzn">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/alphabet.com" width="40"></td>
+<td>GOOGL</td>
+<td>Alphabet (Google)</td>
+<td id="googl">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/netflix.com" width="40"></td>
+<td>NFLX</td>
+<td>Netflix</td>
+<td id="nflx">$0</td>
+<td class="green">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/coinbase.com" width="40"></td>
+<td>COIN</td>
+<td>Coinbase</td>
+<td id="coin">$0</td>
+<td class="red">0%</td>
+</tr>
+
+<tr>
+<td><img src="https://logo.clearbit.com/microstrategy.com" width="40"></td>
+<td>MSTR</td>
+<td>MicroStrategy</td>
+<td id="mstr">$0</td>
+<td class="green">0%</td>
+</tr>
+
+</tbody>
+</table>
+
+<br>
+
+<div class="section-title">
+📊 Dashboard siap dilanjutkan ke script (real-time data)
+</div>
+
+</div> <!-- end main -->
+
+</body>
+</html>
